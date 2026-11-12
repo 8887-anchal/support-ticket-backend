@@ -1,0 +1,20 @@
+services:
+  mysql:
+    image: 'mysql:8.4'
+    environment:
+      MYSQL_DATABASE: tickets
+      MYSQL_USER: ticket_app
+      MYSQL_PASSWORD: ticket_local_password
+      MYSQL_ROOT_PASSWORD: root_local_password
+    ports:
+      - '3308:3306'
+    volumes:
+      - ticket-mysql:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+volumes:
+  ticket-mysql:
