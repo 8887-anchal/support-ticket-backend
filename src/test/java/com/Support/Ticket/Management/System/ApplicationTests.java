@@ -1,6 +1,7 @@
 package com.Support.Ticket.Management.System;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.options;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -15,6 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.http.HttpHeaders;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -25,6 +27,18 @@ class ApplicationTests {
 
 	@Test
 	void contextLoads() {
+	}
+
+	@Test
+	void allowsCorsPreflightFromVercelFrontend() throws Exception {
+		mockMvc.perform(options("/api/auth/register")
+				.header(HttpHeaders.ORIGIN, "https://support-ticket-management-system-drab.vercel.app")
+				.header(HttpHeaders.ACCESS_CONTROL_REQUEST_METHOD, "POST")
+				.header(HttpHeaders.ACCESS_CONTROL_REQUEST_HEADERS, "content-type"))
+			.andExpect(status().isOk())
+			.andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.header()
+				.string(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN,
+						"https://support-ticket-management-system-drab.vercel.app"));
 	}
 
 	@Test
