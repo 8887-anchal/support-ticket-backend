@@ -13,7 +13,7 @@ FROM eclipse-temurin:21-jre
 
 WORKDIR /app
 RUN useradd --system --uid 10001 appuser
-COPY --from=build --chown=appuser:appuser /workspace/target/*.jar /app/app.jar
+COPY --from=build --chown=appuser:appuser /workspace/target/demo-0.0.1-SNAPSHOT.jar /app/app.jar
 
 USER appuser
 EXPOSE 8080
