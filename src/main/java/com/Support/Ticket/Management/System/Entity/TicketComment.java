@@ -13,7 +13,7 @@ import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "ticket_comments")
+@Table(name = "comments")
 public class TicketComment {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
